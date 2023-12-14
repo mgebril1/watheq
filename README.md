@@ -17,6 +17,7 @@
 
 ### Installation
 
+create database which name is **watheq** 
 ```
 git clone https://github.com/mgebril1/watheq.git
 composer install
