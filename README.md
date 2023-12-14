@@ -18,13 +18,16 @@
 ### Installation
 
 ```
-git clone 
+git clone https://github.com/mgebril1/watheq.git
 composer install
 cp .env.local .env
 php artisan migrate
-php artisan db:seed --class=TestingData
+php artisan db:seed
 php artisan jwt:secret
 php artisan serve
 ```
+### auth Data
+	-username => user
+	-password => password
 
 

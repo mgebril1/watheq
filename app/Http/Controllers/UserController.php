@@ -48,4 +48,10 @@ class UserController extends Controller
         $this->userRepository->delete($id);
         return $this->setCode(204)->setSuccess('User Deleted !')->setData($product)->send();
     }
+
+    public function getProductsByUserType()
+    {
+        $products = $this->userRepository->getProductsByUserType();
+        return $this->setData($products)->send();
+    }
 }

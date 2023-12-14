@@ -21,9 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/login', '\App\Http\Controllers\AuthController@login');
 Route::post('/register', '\App\Http\Controllers\AuthController@register');
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware('jwtauth')->group(function () {
 
     Route::apiResource('/users', '\App\Http\Controllers\UserController');
+    Route::get('/get-products-by-user-type', '\App\Http\Controllers\UserController@getProductsByUserType');
 
     Route::apiResource('/products', '\App\Http\Controllers\ProductController');
 

@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 use App\Models\User;
+use App\Enums\UserTypeEnum;
+use App\Models\Product;
 
 class UserRepository{
 
@@ -33,22 +35,22 @@ class UserRepository{
         $user->delete();
     }
 
-    public function getProductsByUserType($user)
+    public function getProductsByUserType()
     {
-        $products = Product::all();
 
-        // Apply different prices based on user type
-        switch ($user->type) {
-            case 'normal':
-                // Apply normal user pricing logic
-                break;
-            case 'gold':
-                // Apply gold user pricing logic
-                break;
-            case 'silver':
-                // Apply silver user pricing logic
-                break;
+        $sqlExpression = 'CASE';
+        
+        foreach (UserTypeEnum::getInstances() as $key => $type) {
+            $priceCounting = UserTypeEnum::getPriceCountingForType($type);
+            $sqlExpression .= ' WHEN users.type = "'.$type.'" THEN products.price * '.$priceCounting;
+            
         }
+        $sqlExpression .= ' ELSE products.price END AS calculated_price';
+
+        // Retrieve the products with the calculated price based on user type
+        $products = Product::select('products.*', \DB::raw($sqlExpression))
+            ->join('users', 'products.user_id', '=', 'users.id')
+            ->get();
 
         return $products;
     }

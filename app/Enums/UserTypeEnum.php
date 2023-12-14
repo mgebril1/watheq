@@ -11,4 +11,19 @@ final class UserTypeEnum extends Enum
     const GOLD = 'gold';
     const SILVER = 'silver';
 
+    public static function getPriceCountingForType($type)
+    {
+    	if ($type == self::NORMAL) {
+    		return 1.1;
+    	}
+    	if ($type == self::GOLD) {
+    		return 2;
+    	}
+    	if ($type == self::SILVER) {
+    		return 2.5;
+    	}
+
+    	return 1;
+    }
+
 }
